@@ -26,7 +26,6 @@ async function createOrder(request: APIRequestContext, jwt: string): Promise<num
   return order.id
 }
 
-
 test('Authorization + Search order by ID ', async ({ request }) => {
   const jwt = await auth(request)
   const orderId = await createOrder(request, jwt)
