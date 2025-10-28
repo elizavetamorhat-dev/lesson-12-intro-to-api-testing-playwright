@@ -72,7 +72,7 @@ export class ApiClient {
     return json
   }
 
-  // 🆕 Удаление заказа по ID
+
   async deleteOrderById(orderId: number): Promise<boolean> {
     const response = await this.request.delete(`${serviceURL}${orderPath}/${orderId}`, {
       headers: { Authorization: `Bearer ${this.jwt}` },
