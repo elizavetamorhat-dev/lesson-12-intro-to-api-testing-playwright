@@ -15,3 +15,30 @@ test('get orders with api client', async ({ request }) => {
 
   expect(ordersBefore.length < ordersAfter.length).toBeTruthy()
 })
+
+test('Authorization + Search order by ID', async ({ request }) => {
+  const apiClient = await ApiClient.create(request)
+  const orderId = await apiClient.createOrderAndReturnOrderId()
+
+  const foundOrder = await apiClient.getOrderById(orderId)
+  expect(foundOrder.id).toBe(orderId)
+
+  console.log('Order found by ID:', foundOrder.id)
+})
+
+
+test('Authorization + Delete order by ID', async ({ request }) => {
+  const apiClient = await ApiClient.create(request)
+  const orderId = await apiClient.createOrderAndReturnOrderId()
+
+  const deleted = await apiClient.deleteOrderById(orderId)
+  expect(deleted).toBe(true)
+
+  const checkResponse = await request.get(`https://backend.tallinn-learning.ee/orders/${orderId}`, {
+    headers: { Authorization: `Bearer ${apiClient.jwt}` },
+  })
+
+  expect(checkResponse.status()).toBe(200)
+
+  console.log('Order successfully deleted:', orderId)
+})

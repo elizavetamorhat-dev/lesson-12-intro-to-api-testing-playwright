@@ -61,5 +61,25 @@ export class ApiClient {
     expect(json.length).toBeGreaterThan(0);
 
     return json;
+
+  }
+  async getOrderById(orderId: number): Promise<OrderDTO> {
+    const response = await this.request.get(`${serviceURL}${orderPath}/${orderId}`, {
+      headers: { Authorization: `Bearer ${this.jwt}` },
+    })
+    expect(response.status()).toBe(StatusCodes.OK)
+    const json: OrderDTO = await response.json()
+    return json
+  }
+
+  // 🆕 Удаление заказа по ID
+  async deleteOrderById(orderId: number): Promise<boolean> {
+    const response = await this.request.delete(`${serviceURL}${orderPath}/${orderId}`, {
+      headers: { Authorization: `Bearer ${this.jwt}` },
+    })
+    expect(response.status()).toBe(StatusCodes.OK)
+    return true
   }
 }
+
+
