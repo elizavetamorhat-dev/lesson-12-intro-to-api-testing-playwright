@@ -26,7 +26,6 @@ test('Authorization + Search order by ID', async ({ request }) => {
   console.log('Order found by ID:', foundOrder.id)
 })
 
-
 test('Authorization + Delete order by ID', async ({ request }) => {
   const apiClient = await ApiClient.create(request)
   const orderId = await apiClient.createOrderAndReturnOrderId()
